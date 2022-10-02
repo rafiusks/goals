@@ -1,13 +1,19 @@
 import { StyleSheet, View, FlatList } from "react-native"
 import GoalItem from "./GoalItem"
 
-function GoalContainer(prop) {
+function GoalContainer(props) {
 	return (
 		<View style={styles.goalsContainer}>
 			<FlatList
-				data={prop.data}
+				data={props.data}
 				renderItem={(itemData) => {
-					return <GoalItem text={itemData.item.text} />
+					return (
+						<GoalItem
+							text={itemData.item.text}
+							id={itemData.item.id}
+							onDeleteItem={props.onDeleteItem}
+						/>
+					)
 				}}
 				keyExtractor={(item, index) => {
 					return item.id
