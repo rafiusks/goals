@@ -1,17 +1,13 @@
 import { useState } from "react"
-import { StyleSheet, View, Button, TextInput } from "react-native"
+import { StyleSheet, View } from "react-native"
 
+import GoalInput from "./components/GoalInput"
 import GoalContainer from "./components/GoalContainer"
 
 export default function App() {
-	const [enteredGoalText, setEnteredGoalText] = useState("")
 	const [courseGoals, setCourseGoals] = useState([])
 
-	function goInputHandler(enteredText) {
-		setEnteredGoalText(enteredText)
-	}
-
-	function addGoalHandler() {
+	function addGoalHandler(enteredGoalText) {
 		setCourseGoals((currentCourseGoals) => [
 			...currentCourseGoals,
 			{ text: enteredGoalText, id: Math.random().toString() },
@@ -20,14 +16,7 @@ export default function App() {
 
 	return (
 		<View style={styles.appContainer}>
-			<View style={styles.inputContainer}>
-				<TextInput
-					placeholder="Your course goal!"
-					style={styles.inputText}
-					onChangeText={goInputHandler}
-				/>
-				<Button title="Add Goal" onPress={addGoalHandler} />
-			</View>
+			<GoalInput onAddGoal={addGoalHandler} />
 			<GoalContainer data={courseGoals} />
 		</View>
 	)
@@ -39,24 +28,5 @@ const styles = StyleSheet.create({
 		marginTop: 50,
 		paddingHorizontal: 20,
 		maxWidth: "100%",
-	},
-	inputContainer: {
-		flex: 1,
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		marginBottom: 24,
-		borderBottomWidth: 0.5,
-		borderBottomColor: "#cccccc",
-	},
-	inputText: {
-		borderWidth: 0.5,
-		width: "70%",
-		marginRight: 8,
-		padding: 8,
-		borderColor: "#cccccc",
-	},
-	goalsContainer: {
-		flex: 5,
 	},
 })
